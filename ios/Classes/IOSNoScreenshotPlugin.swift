@@ -45,6 +45,12 @@ public class IOSNoScreenshotPlugin: NSObject, FlutterPlugin, FlutterStreamHandle
     // MARK: - Inline Screenshot Prevention (replaces ScreenProtectorKit)
 
     private func configurePreventionScreenshot(window: UIWindow) {
+        let disablePrevention = Bundle.main.object(
+            forInfoDictionaryKey: "NoScreenshotDisablePrevention"
+        ) as? String
+
+        guard disablePrevention != "YES" else { return }
+        
         guard let rootLayer = window.layer.superlayer else { return }
         guard screenPrevent.layer.superlayer == nil else { return }
 
